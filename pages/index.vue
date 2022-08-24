@@ -16,11 +16,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
-document.addEventListener('keypress', ()=>{
-  console.log('test1')
-  onChangeShow(false);
- 
-})
+
 
 export default {
   name: 'IndexPage',

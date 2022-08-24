@@ -11,6 +11,7 @@ header {
     position: relative;
     width: 32px;
     height: 32px;
+    cursor: pointer;
 }
 .cart-value {
     background-color: #959DAD;
@@ -21,10 +22,25 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 0;
-    right: 0;
+    top: -4px;
+    right: 3px;
     font-weight: 700;
     font-size: 8px;
     line-height: 10px;
     color: #fff;
+    
+}
+@keyframes shake-cart {   
+    0%, 50%, 100% {
+        transform: rotate(0deg);
+    }
+    10%, 30% {
+        transform: rotate(-10deg);
+    }
+    20%, 40% {
+        transform: rotate(10deg);
+    }
+}
+.shaked {
+    animation: shake-cart 1.2s ease;
 }

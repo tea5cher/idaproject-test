@@ -6,7 +6,8 @@ body {
 }
 
 .container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 272px auto;
 }
 *{
     box-sizing: border-box;
@@ -21,8 +22,11 @@ button {
     background-color: inherit;
 }
 
-
+p {
+    margin: 0
+}
 
 
 @import 'modules/header.scss';
 @import 'modules/catalog.scss';
+@import 'modules/product-list.scss';
