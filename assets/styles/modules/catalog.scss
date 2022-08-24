@@ -1,0 +1,37 @@
+.catalog {
+    width: 248px;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 0 0 88px;
+    &__title{
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 41px;
+        color: #1F1F1F;
+        margin-bottom: 24px;
+    }
+    &__filters {
+        margin: 0;
+        padding: 0;
+    }
+    &__item{
+        list-style: none;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+        color: #959DAD;
+        cursor: pointer;
+        margin-bottom: 16px;
+        &:hover{
+            color: #59606D;
+        }
+        &:active{
+            text-decoration-line: underline;
+            color: #1F1F1F;
+        }
+        &_active{
+            text-decoration-line: underline;
+            color: #1F1F1F;
+        }
+    }
+}

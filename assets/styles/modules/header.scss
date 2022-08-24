@@ -1,0 +1,30 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 19px 88px;
+    max-height: 66px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cart-wrap {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+.cart-value {
+    background-color: #959DAD;
+    border-radius: 50%;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    font-weight: 700;
+    font-size: 8px;
+    line-height: 10px;
+    color: #fff;
+}
