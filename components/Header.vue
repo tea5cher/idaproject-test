@@ -2,7 +2,7 @@
     <header>
         <h1>TestList</h1>
         <div @click="onToggleShow" class="cart-wrap">
-            <img class="cart" src="../assets/icons/cart.svg" alt="cart">
+            <img class="cart__logo" src="../assets/icons/cart.svg" alt="cart">
             <span class="cart-value" >{{getCartList.length}}</span>
         </div>
     </header>

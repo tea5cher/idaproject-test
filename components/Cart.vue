@@ -28,7 +28,7 @@
                                 <span class="card__rating-descr">{{item.rating}}</span>
                             </div>
                         </div>
-                        <button @click="deleteItemFromCart(item.id)" class="item__delete">
+                        <button @click="onDeleteItem(item.id)" class="item__delete">
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M6 10C6 9.44772 6.44772 9 7 9H25C25.5523 9 26 9.44772 26 10C26 10.5523 25.5523 11 25 11H7C6.44772 11 6 10.5523 6 10Z" fill="#959DAD"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14 7C13.7348 7 13.4804 7.10536 13.2929 7.29289C13.1054 7.48043 13 7.73478 13 8V9H19V8C19 7.73478 18.8946 7.48043 18.7071 7.29289C18.5196 7.10536 18.2652 7 18 7H14ZM21 9V8C21 7.20435 20.6839 6.44129 20.1213 5.87868C19.5587 5.31607 18.7956 5 18 5H14C13.2044 5 12.4413 5.31607 11.8787 5.87868C11.3161 6.44129 11 7.20435 11 8V9H9C8.44772 9 8 9.44772 8 10V24C8 24.7957 8.31607 25.5587 8.87868 26.1213C9.44129 26.6839 10.2043 27 11 27H21C21.7957 27 22.5587 26.6839 23.1213 26.1213C23.6839 25.5587 24 24.7957 24 24V10C24 9.44772 23.5523 9 23 9H21ZM10 11V24C10 24.2652 10.1054 24.5196 10.2929 24.7071C10.4804 24.8946 10.7348 25 11 25H21C21.2652 25 21.5196 24.8946 21.7071 24.7071C21.8946 24.5196 22 24.2652 22 24V11H10Z" fill="#959DAD"/>
@@ -41,9 +41,6 @@
                 <div class="cart__subtitle">Оформить заказ</div>
                 <form @submit.prevent="checkForm" action="submit" class="cart__form">
                     <input v-model="formData.formFullName" type="text" placeholder="Ваше имя">
-                    <!-- <p v-if="formData.formFullName.length<1" class="cart__error">
-                        Введите ваше имя
-                    </p> -->
                     <input
                         id="phone"
                         v-facade="'+7 (###) ###-##-##'"
@@ -52,13 +49,7 @@
                         placeholder="Телефон"
                         v-model="formData.formTelephone"
                     >
-                    <!-- <p v-if="formData.formFullName.length<1" class="cart__error">
-                        Введите ваше имя
-                    </p> -->
                     <input v-model="formData.formAdress" type="text" placeholder="Адрес">
-                    <!-- <p v-if="formData.formFullName.length<1" class="cart__error">
-                        Введите ваше имя
-                    </p> -->
                     <button  type="submit" class="cart__btn-return_submit cart__btn-return">Отправить</button>
                     <p v-if="errors.length">
                         <ul class="cart__errors-list">
@@ -107,6 +98,12 @@ export default {
         onCloseCart(){
             this.$emit('closeCart')
         },
+        onDeleteItem(id){
+            this.deleteItemFromCart(id);
+            let arr = JSON.parse(localStorage.getItem('test'));
+            arr = arr.filter(item=> item.id !== id);
+            localStorage.setItem('test', JSON.stringify(arr));
+        },
         checkForm(){
             if (this.formData.formFullName && this.formData.formTelephone && this.formData.formAdress) {
                 console.log(this.formData);
@@ -130,179 +127,11 @@ export default {
     },
     computed:{
         ...mapGetters('cart',['getCartList'])
-    }
+    },
+    // mounted:{
+    //     beforeMount(){
+    //         this.checkStorage();
+    //     }
+    // }
 }
 </script>
-
-
-
-<style lang="scss" scoped>
-    .cart-wrapper{
-        z-index: 1000;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        position: fixed;
-        display: grid;
-        grid-template-columns: auto 460px;
-        overflow: scroll;
-    }
-    .overlay {
-        background-color: #fff;
-        opacity: 0.8;
-        width: 100%;
-        height: 100%;
-        z-index: 1000;
-        
-    }
-    .cart {
-        display: block;
-        background-color: #fff;
-        opacity: 1;
-        height: 100%;
-        width: 100%;
-        z-index: 1111;
-        box-shadow: -4px 0px 16px rgba(0, 0, 0, 0.05);
-        border-radius: 8px 0px 0px 8px;
-        padding: 12px 48px;
-        &__list {
-            max-height: 480px;
-            overflow-y: auto;
-        }
-        &__title-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        &__title {
-            font-weight: 700;
-            font-size: 32px;
-            line-height: 41px;
-            color: #000000;
-            margin: 0;
-        }
-        &__close {
-            cursor: pointer;
-        }
-        &__descr {
-            font-weight: 400;
-            font-size: 22px;
-            line-height: 28px;
-            margin-bottom: 24px;
-        }
-        &__btn-return{
-            background: #1F1F1F;
-            border-radius: 8px;
-            width: 100%;
-            color: #fff;
-            padding: 15px 0;
-            &:hover svg{
-                fill: black;
-            }
-            &:hover, :focus {
-                background-color: #59606D;
-            }
-            &_submit {
-                margin-top: 24px;
-            }
-        }
-        &__form {
-            display: flex;
-            flex-direction: column;
-            input {
-                background: #F8F8F8;
-                border-radius: 8px;
-                border: none;
-                width: 100%;
-                height: 50px;
-                margin-top: 16px;
-                padding: 14px;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 21px;
-                color: #1F1F1F;
-            }
-        }
-        &__errors-list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        &__error {
-            font-weight: 400;
-            font-size: 11px;
-            line-height: 14px;
-            color: #EB5757;
-            // margin-bottom: 5px;
-            margin: 0;
-        }
-    }
-    .item {
-        display: flex;
-        width: 100%;
-        max-height: 120px;
-        align-items: center;
-        padding: 15px;
-        justify-content: space-between;
-        &__img{
-            width: 70px;
-            height: 90px;
-            object-fit: cover;
-            // margin-right: 35px;
-        }
-        &__name {
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 18px;
-            color: #59606D;
-            margin-bottom: 6px;
-        }
-        &__price{
-            font-weight: 700;
-            font-size: 14px;
-            line-height: 18px;
-            color: #1F1F1F;
-            margin-bottom: 16px;
-        }
-        &__rating {
-            font-size: 10px;
-            line-height: 13px;
-            display: flex;
-            align-items: flex-end;
-            color: #F2C94C;
-        }
-        &__info-wrap{
-            width: 100%;
-            height: auto;
-            display: flex;
-            margin-left: 35px;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-    }
-    .item__delete:hover svg path {
-        fill: black;
-        // background-color: red;
-    }
-    .done-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50%;
-        &__img {
-            margin-bottom: 24px;
-        }
-        &__access{
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 31px;
-        }
-        &__manager-task{
-            font-weight: 400;
-            font-size: 16px;
-            color: #59606D;
-        }
-    }
-    
-</style>

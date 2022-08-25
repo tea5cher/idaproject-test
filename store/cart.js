@@ -1,33 +1,14 @@
 export const state = () => ({
-    cartList: [
-        {   category: 1,
-            id: 1,
-            name: "РЮКЗАК OUTDOOR",
-            photo: "/upload/product/backpack2-4755.e0agsd.jpg",
-            price: 242000,
-            rating: 2
-        },
-        {   category: 1,
-            id: 2,
-            name: "РЮКЗАК OUTDOOR",
-            photo: "/upload/product/backpack2-4755.e0agsd.jpg",
-            price: 242000,
-            rating: 2
-        },
-        {   category: 1,
-            id: 3,
-            name: "РЮКЗАК OUTDOOR",
-            photo: "/upload/product/backpack2-4755.e0agsd.jpg",
-            price: 242000,
-            rating: 2
-        },
-    ],
+    cartList: []
 })
 
 export const mutations = {
     SET_CART_LIST(state,product){
-        console.log(product);
+        product.id = Math.random();
         state.cartList.push(product);
+    },
+    COPY_CART_LOCAL(state, list){
+        state.cartList = list;
     },
     CLEAR_CART_LIST(state){
         state.cartList = [];
@@ -39,15 +20,18 @@ export const mutations = {
 
 export const actions = {
     addToCart({commit}, product){
-        console.log(product);
-        commit('SET_CART_LIST', product)
+        let newProduct = JSON.parse(JSON.stringify(product));
+        newProduct.id = Math.random();
+        commit('SET_CART_LIST', newProduct)
     },
     clearCart({commit}){
         commit('CLEAR_CART_LIST')
     },
     deleteItemFromCart({commit}, id) {
-        console.log(id);
         commit('DELETE_ITEM', id)
+    },
+    getCartFromStorage({commit}, list){
+        commit('COPY_CART_LOCAL', list)
     }
 }
 

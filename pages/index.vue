@@ -28,14 +28,23 @@ export default {
   },
   methods: {
     ...mapActions('products', ['testAc', 'fetchProducts']),
+    ...mapActions('cart', ['getCartFromStorage']),
     ...mapGetters('products', ['moviesList']),
     onChangeShow(bool){
       console.log('testing')
       this.show = bool;
-    }
+    },
+    checkStorage(){
+            const arr = JSON.parse(localStorage.getItem('test'));
+            if(arr){
+              this.getCartFromStorage(arr);
+            }
+            
+    },
   },
   mounted(){
     this.fetchProducts(1);
+    this.checkStorage();
   },
 }
 </script>
